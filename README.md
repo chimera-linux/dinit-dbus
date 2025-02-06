@@ -1,22 +1,10 @@
-# libdinitctl
+# dinit-dbus
 
-This is a pure-C API to the dinitctl socket interface of the dinit service
-manager (https://github.com/davmac314/dinit). It's designed to map closely
-to the protocol, while offering a high-level API that can easily integrate
-into different event loops and is bindable.
+This is a D-Bus interface to dinit (https://github.com/davmac314/dinit).
 
-Minimum dinit version: 92cb58eedaf930fed60d17b6247c1f2155c78ec8 (v5 protocol)
+It is built upon libdinitctl (https://github.com/chimera-linux/libdinitctl).
 
-## Building
-
-You can build the project with Meson. The only dependencies are a C99 compiler,
-a C++17 compiler, a system capable of running dinit, and optionally the D-Bus
-reference library (`dbus-1`).
-
-## D-Bus interface
-
-Optionally, this project also provides a D-Bus API. It is exposed by a daemon
-called `dinit-dbus`.
+It is exposed by a daemon called `dinit-dbus`.
 
 The daemon is meant to run as a dinit service. Such service should specify:
 
@@ -31,12 +19,12 @@ and will signal readiness at an appropriate time.
 You can also specify the file descriptor manually (`-f FD`) or specify the
 socket path (`-S /path/to/socket`).
 
-### API
+## API
 
-The API generally mirrors the C API. One difference is that since the
-D-Bus API uses global objects available to any caller, all actions
-work by service name instead of using handles. Handles are instead
-set up internally and temporarily for the lifetime of an event.
+The API generally mirrors the libdinitctl API. One difference is that
+since the D-Bus API uses global objects available to any caller, all
+actions work by service name instead of using handles. Handles are
+instead set up internally and temporarily for the lifetime of an event.
 
 This also means every method that takes a service name may raise the
 same errors service loading would raise in the C API.
@@ -198,7 +186,7 @@ For `ListServices`, the output is an array of structs. This array matches
 the the status struct, except it also has an additional member (service name)
 at the beginning.
 
-### Usage from command line
+## Usage from command line
 
 You can use something like this:
 
