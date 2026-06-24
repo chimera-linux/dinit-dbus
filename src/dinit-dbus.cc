@@ -1597,7 +1597,7 @@ struct manager_get_all_env {
             throw unrecoverable_error{"dbus_message_iter_open_container", ENOMEM};
         }
         for (char *curvar = vars; bsize;) {
-            if (!dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &curvar)) {
+            if (!dbus_message_iter_append_basic(&aiter, DBUS_TYPE_STRING, &curvar)) {
                 throw unrecoverable_error{"dbus_message_iter_append_basic", ENOMEM};
             }
             auto slen = std::strlen(curvar);
